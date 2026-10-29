@@ -1,0 +1,14 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const root = path.resolve(__dirname, '../anti-red-tag');
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8'));
+if (manifest.name !== 'Anti Red-Tag') throw new Error('Incorrect project name');
+if (manifest.content_scripts || manifest.host_permissions) throw new Error('Protection must stay opt-in and scoped to one tab');
+for (const file of [manifest.background.service_worker, manifest.action.default_popup, ...Object.values(manifest.icons)]) if (!fs.existsSync(path.join(root, file))) throw new Error(`Missing ${file}`);
+for (const file of fs.readdirSync(root).filter(name => name.endsWith('.js'))) new vm.Script(fs.readFileSync(path.join(root,file),'utf8'),{filename:file});
+const html = fs.readFileSync(path.join(root,'controller.html'),'utf8');
+for (const [,file] of html.matchAll(/(?:src|href)="([^"#]+)"/g)) if (!fs.existsSync(path.join(root,file))) throw new Error(`Missing ${file}`);
+if (/<script[^>]*>\s*[^<\s]/i.test(html)) throw new Error('Inline script violates extension CSP');
+for (const name of ['controller.html','controller.js','controller.css','background.js','manifest.json']) if (/split ratio|focus shield|secondaryId|startSplit|swap sides/i.test(fs.readFileSync(path.join(root,name),'utf8'))) throw new Error(`Legacy feature in ${name}`);
+console.log('Brand, single-tab scope, manifest, resources, syntax, and CSP checks passed.');

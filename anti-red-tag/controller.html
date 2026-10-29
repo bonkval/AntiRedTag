@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Anti Red-Tag</title>
+  <link rel="stylesheet" href="controller.css">
+  <script src="core.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="demo.js" defer></script>
+  <script src="controller.js" defer></script>
+</head>
+<body>
+  <main class="panel">
+    <header><div class="brand"><span class="brand-mark" data-icon="tag"></span><h1>Anti Red-Tag</h1></div><div class="actions"><button id="kill" class="icon-button kill-button" aria-label="Emergency stop all protection" title="Emergency stop all protection (Alt+Shift+K)" data-icon="stop"></button><button id="theme" class="icon-button" aria-label="Switch to light mode" title="Switch to light mode" data-icon="sun"></button><button id="help" class="icon-button" aria-label="Help" title="Help" data-icon="help"></button></div></header>
+    <div id="controls" inert>
+    <p id="demo-banner" class="preview-banner" hidden>Interactive preview</p>
+    <section class="protection" aria-label="Tab protection">
+      <button id="protect" class="power-button" aria-pressed="false" aria-label="Protect selected tab" title="Protect selected tab"><span data-icon="power"></span></button>
+      <h2 id="protection-status" aria-live="polite">Protection off</h2>
+      <span id="state-label" class="state-label">Ready</span>
+    </section>
+    <section class="tab-section" aria-label="Selected tab">
+      <button id="choose-tab" class="tab-picker" aria-haspopup="dialog" aria-label="Choose a tab"><span class="tab-symbol" data-icon="tab"></span><span id="tab-title">Loading…</span><span class="chevron" data-icon="chevron"></span></button>
+      <div class="tab-tools"><button id="detect" class="icon-button" aria-label="Use current tab" title="Use current tab" data-icon="refresh"></button><button id="focus" class="icon-button" aria-label="Go to selected tab" title="Go to selected tab" data-icon="target"></button><button id="detach" class="icon-button" aria-label="Open control window" title="Open control window" data-icon="popout"></button></div>
+    </section>
+    </div>
+    <p id="feedback" class="feedback" role="status" hidden></p>
+    <div class="recovery-actions"><button id="retry-load" class="icon-button" aria-label="Retry loading" title="Retry loading" data-icon="refresh" hidden></button><button id="grant" class="icon-button" aria-label="Allow website access and retry" title="Allow website access and retry" data-icon="key" hidden></button><button id="reload-affected" class="icon-button danger" aria-label="Hard reset selected or affected tabs by reloading; unsaved edits may be lost" title="Hard reset by reloading; unsaved edits may be lost" data-icon="refresh" hidden></button></div>
+    <footer>Protection follows the selected tab.</footer>
+  </main>
+  <dialog id="tab-dialog" aria-labelledby="picker-heading"><div class="dialog-header"><h2 id="picker-heading">Choose a tab</h2><button id="close-picker" class="icon-button" aria-label="Close tab selector" title="Close" data-icon="close"></button></div><div class="search-field"><span data-icon="search"></span><input id="tab-search" type="search" placeholder="Search tabs" aria-label="Search tabs" autocomplete="off"></div><p id="picker-feedback" class="feedback error" role="alert" hidden></p><div id="tab-options" class="tab-options"></div></dialog>
+  <dialog id="help-dialog" aria-labelledby="help-heading"><div class="dialog-header"><h2 id="help-heading">Anti Red-Tag</h2><button id="close-help" class="icon-button" aria-label="Close help" title="Close" data-icon="close"></button></div><p>Choose a tab, then press the power button. Only that tab reports visible and focused while you work elsewhere.</p><p>The red stop icon immediately disables automatic protection and clears accessible protected pages, including previous tabs. If cleanup is blocked, use the recovery reload icon. Reloading may lose unsaved edits.</p><p>Website access is requested when needed. Navigation keeps the same tab selected. Permitted child frames are covered too.</p><p>Best effort: websites can use other signals, and browsers can pause background work. Protection may start after a page’s first scripts.</p><div class="shortcut"><span>Toggle protection</span><kbd>Alt+Shift+P</kbd></div><div class="shortcut"><span>Emergency stop</span><kbd>Alt+Shift+K</kbd></div><div class="help-bottom"><span id="coverage">Protection off</span><button id="revoke" class="icon-button danger" aria-label="Stop protection and remove website access" title="Stop protection and remove website access" data-icon="key"></button></div><p id="help-feedback" class="feedback" role="status" hidden></p></dialog>
+</body>
+</html>

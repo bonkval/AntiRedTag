@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Anti Red-Tag",
+  "version": "2.0.1",
+  "description": "Keep one chosen tab reporting focused and visible while you work elsewhere.",
+  "permissions": ["tabs", "storage", "scripting", "webNavigation"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_title": "Anti Red-Tag", "default_popup": "controller.html", "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png" } },
+  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "commands": {
+    "toggle-protection": { "suggested_key": { "default": "Alt+Shift+P" }, "description": "Toggle protection for the selected tab" },
+    "emergency-stop": { "suggested_key": { "default": "Alt+Shift+K" }, "description": "Emergency stop all protection" }
+  }
+}
